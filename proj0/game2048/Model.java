@@ -106,32 +106,49 @@ public class Model extends Observable {
      *    value, then the leading two tiles in the direction of motion merge,
      *    and the trailing tile does not.
      * */
-
+    public boolean move(){
+        boolean moved = false;
+        for (int i = board.size() - 1; i >= 0; i -= 1){//列
+            for (int j = board.size() - 1; j >= 0; j -= 1){//行
+                Tile t = (board.tile(i, j));
+                if (board.tile(i, j) != null){
+                    for (int k = board.size() - 1; k >= j; k -=1){
+                        if (board.tile(i, k) == null){
+                            board.move(i, k, t);
+                            moved = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        return moved;
+    }
     public boolean tilt(Side side) {
         boolean changed;
         changed = false;
         board.setViewingPerspective(side);
-        boolean[][] merged = new boolean[board.size()][board.size()];
-        for (int i = board.size() - 1; i >= 0; i -= 1) {
-            for (int j = board.size() - 1; j >= 0; j -= 1) {
-                Tile t = (board.tile(i, j));
-                if (board.tile(i, j) != null) {
-                   for (int k = board.size() - 1; k > j; k -= 1){
-                       if (board.tile(i, k) == null){
-                           board.move(i, k, t);
-                           changed = true;
-                           break;
-                       } else if (board.tile(i, k).value() == t.value() && !merged[i][k]) {
-                           board.move(i, k, t);
-                           changed = true;
-                           score += t.value() * 2;
-                           merged[i][k] = true;
-                           break;
-                       }
-                   }
-
+        //先move
+        //从上到下merge，如果向上一个能merge，则merge，否则继续向下找
+        //先列后行套循环
+        changed = move();
+        for (int i = board.size() - 1; i >= 0; i -= 1) {//列
+            for (int j = board.size() - 2; j >= 0; j -= 1){//行
+                Tile t = board.tile(i, j);
+                if (board.tile(i, j + 1) != null && t != null){
+                    if (board.tile(i, j + 1).value() == t.value()){
+                        board.move(i,j+1,t);
+                        score += 2 * t.value();
+                        changed = true;
+                    }
                 }
             }
+        }
+        if (changed == true){
+        move();
+        }
+        else {
+            changed = move();
         }
         board.setViewingPerspective(Side.NORTH);
 
