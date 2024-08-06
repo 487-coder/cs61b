@@ -27,12 +27,12 @@ public class TimeAList {
         AList<Double> times = new AList<>();
         AList<Integer> opCounts = new AList<>();
         for (int i = 1000; i <= 128000; i = i *2 ){
-            Stopwatch sw = new Stopwatch();
             Ns.addLast(i);
             opCounts.addLast(i);
             AList<Integer> L = new AList<>();
+            Stopwatch sw = new Stopwatch();
             for(int j = 0; j < i; j++){
-                L.addLast(j);
+                L.addLast(1);
             }
             double timeInSeconds = sw.elapsedTime();
             times.addLast(timeInSeconds);
