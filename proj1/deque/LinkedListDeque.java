@@ -22,7 +22,7 @@ public class LinkedListDeque<T>{
 
     /**空Deque*/
     public LinkedListDeque() {
-        sentinel = new IntNode<>(1, null, null);
+        sentinel = new IntNode<T>(null, null, null);
         sentinel.next = sentinel;
         sentinel.prev = sentinel;
         size = 0;
@@ -139,9 +139,19 @@ public class LinkedListDeque<T>{
             i += 1;
         }
         return true;
-
-
-
+    }
+/**这里不会写，抄了一段*/
+    public T getRecursive(int index) {
+        IntNode p = sentinel.next;
+        if (index != 0 && p == sentinel) {
+            return null;
+        }
+        if (index == 0){
+            return (T) p.item;
+        }
+        LinkedListDeque<T> l = new LinkedListDeque<>();
+        l.sentinel.next = p.next;
+        return l.getRecursive(index - 1);
     }
 
 
