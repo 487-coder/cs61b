@@ -1,9 +1,8 @@
 package deque;
 
-import java.util.Deque;
 import java.util.Iterator;
 
-public class LinkedListDeque<T>{
+public class LinkedListDeque<T> implements Deque<T>, Iterable<T>{
 
     private class IntNode<T> {
         public T item;
@@ -27,7 +26,7 @@ public class LinkedListDeque<T>{
         sentinel.prev = sentinel;
         size = 0;
     }
-
+    @Override
     public void addFirst(T item) {
             IntNode p = new IntNode(item, sentinel.next, sentinel);
             sentinel.next.prev =p;
@@ -36,20 +35,21 @@ public class LinkedListDeque<T>{
 
     }
     /**注意这里要有恒定的时间复杂度，也就是说所有查找地址的操作从sentinel开始*/
+    @Override
     public void addLast(T item) {
         IntNode p = new IntNode(item, sentinel, sentinel.prev);
         sentinel.prev.next = p;
         sentinel.prev = p;
         size += 1;
     }
-
+    @Override
     public boolean isEmpty() {
         if (size == 0){
             return true;
         }
         return false;
     }
-
+    @Override
     public int size() {
        return size;
     }
@@ -62,7 +62,7 @@ public class LinkedListDeque<T>{
         }
         System.out.println(printStr);
     }
-
+    @Override
     public T removeFirst() {
         if (size == 0) {
             return null;
@@ -75,7 +75,7 @@ public class LinkedListDeque<T>{
         p.item = null;
         return removed;
     }
-
+    @Override
     public T removeLast() {
         if (size == 0) {
             return null;
@@ -101,7 +101,7 @@ public class LinkedListDeque<T>{
         }
         return (T) p.item;
     }
-
+    @Override
     public Iterator<T> iterator() {
         return new LinkedIterator();
     }
@@ -112,28 +112,28 @@ public class LinkedListDeque<T>{
         public LinkedIterator() {
             wizPos = 0;
         }
-
+        @Override
         public boolean hasNext() {
             return wizPos < size;
         }
-
+        @Override
         public T next() {
             T returnItem = get(wizPos);
             wizPos += 1;
             return returnItem;
         }
     }
-
+    @Override
     public boolean equals(Object o) {
         if (! (o instanceof LinkedListDeque)) {
             return false;
         }
-        if (((LinkedListDeque<?>) o).size != this.size) {
+        if (((LinkedListDeque<T>) o).size != this.size) {
             return false;
         }
         int i = 0;
         while (i < this.size) {
-            if (! this.get(i).equals(((LinkedListDeque<?>) o).get(i))) {
+            if (! this.get(i).equals(((LinkedListDeque<T>) o).get(i))) {
                 return false;
             }
             i += 1;
@@ -149,7 +149,7 @@ public class LinkedListDeque<T>{
         if (index == 0){
             return (T) p.item;
         }
-        LinkedListDeque<T> l = new LinkedListDeque<>();
+        LinkedListDeque<T> l = new LinkedListDeque<T>();
         l.sentinel.next = p.next;
         return l.getRecursive(index - 1);
     }
