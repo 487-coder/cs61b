@@ -1,6 +1,9 @@
 package deque;
 
 import org.junit.Test;
+
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 
 public class ArrayDequeTest {
@@ -57,5 +60,23 @@ public class ArrayDequeTest {
 
     }
 
+    @Test
+    public void addget(){
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        lld1.addFirst(1);
+        lld1.addLast(2);
+        lld1.addLast(3);
+        lld1.addLast(4);
+        lld1.addLast(5);
+        lld1.addLast(6);
+        lld1.addLast(7);
+        lld1.addLast(8);
+        lld1.addFirst(9);
+        assertEquals(9,lld1.size());
+
+
+
+
+    }
 
 }

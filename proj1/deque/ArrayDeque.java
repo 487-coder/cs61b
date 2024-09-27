@@ -21,10 +21,7 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
             resize(size*2);
         }
         items[nextFirst] = item;
-        nextFirst -= 1;
-        if (nextFirst < 0) {
-            nextFirst = items.length -1;
-        }
+        nextFirst = (nextFirst - 1 + items.length) % items.length ;
         size += 1;
     }
     private void resize(int capicity){
@@ -108,7 +105,7 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
         if (index > size){
             return null;
         }
-        return items[index];
+        return items[(nextFirst+1+index)% items.length];
     }
 
     @Override
