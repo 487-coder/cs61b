@@ -90,8 +90,8 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
     @Override
     public T removeLast() {
         if (size != 0){
-            T a = items[(nextLast - 1)];
-            nextFirst = (nextLast - 1);
+            T a = items[(nextLast + items.length- 1)% items.length];
+            nextFirst = (nextLast + items.length- 1)% items.length;
             size -= 1;
             if (size < 0.25*items.length){
                 resize(items.length / 2);
