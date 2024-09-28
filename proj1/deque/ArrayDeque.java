@@ -27,12 +27,12 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
     private void resize(int capicity){
         T[] a = (T[]) new Object[capicity];
         if (nextFirst < nextLast){
-            System.arraycopy(items, nextFirst,a,0,(nextLast - nextFirst));
+            System.arraycopy(items, nextFirst,a,0,size+2);
             nextFirst = 0;
             nextLast = size + 2;
         } else if (nextFirst > nextLast) {
-            System.arraycopy(items, nextFirst, a, 0,(items.length - nextFirst - 1));
-            System.arraycopy(items, 0, a,(items.length - nextFirst) ,(nextLast + items.length - nextFirst));
+            System.arraycopy(items, nextFirst, a, 0,(items.length - nextFirst));
+            System.arraycopy(items, 0, a,(items.length - nextFirst) ,(size+2-items.length+nextFirst));
             nextFirst = 0;
             nextLast = size + 2;
         }
