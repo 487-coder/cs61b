@@ -63,20 +63,57 @@ public class ArrayDequeTest {
     @Test
     public void addget(){
         ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
-        lld1.addFirst(1);
+        lld1.addFirst(0);
+        lld1.addLast(1);
         lld1.addLast(2);
         lld1.addLast(3);
         lld1.addLast(4);
         lld1.addLast(5);
         lld1.addLast(6);
         lld1.addLast(7);
-        lld1.addLast(8);
-        lld1.addFirst(9);
-        assertEquals(9,lld1.size());
+        assertEquals(0,lld1.nextFirst);
+
+        assertEquals(1, (int)lld1.get(1));
+        assertEquals(6,(int)lld1.get(6));
 
 
 
 
+    }
+    @Test
+    public void fill_empty_fill(){
+        ArrayDeque<Integer> lld1 = new ArrayDeque<Integer>();
+        lld1.addFirst(0);
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld1.addLast(3);
+        lld1.addLast(4);
+        lld1.addLast(5);
+        lld1.addLast(6);
+        lld1.addLast(7);
+        lld1.addFirst(-1);
+        lld1.removeFirst();
+        lld1.removeFirst();
+        lld1.removeLast();
+        lld1.removeFirst();
+        lld1.removeFirst();
+        lld1.removeLast();
+        lld1.removeFirst();
+        lld1.removeFirst();
+        lld1.removeLast();
+        lld1.addFirst(0);
+        lld1.addLast(1);
+        lld1.addLast(2);
+        lld1.addLast(3);
+        lld1.addLast(4);
+        lld1.addLast(5);
+        lld1.addLast(6);
+        lld1.addLast(7);
+        lld1.addFirst(-1);
+        assertEquals(11,lld1.nextFirst);
+
+        assertEquals(0, (int)lld1.get(1));
+        assertEquals(5,(int)lld1.get(6));
     }
 
 }

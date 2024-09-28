@@ -1,6 +1,7 @@
 package deque;
 
 import java.util.Iterator;
+import java.util.Map;
 
 public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
     public int size;
@@ -29,12 +30,12 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
         if (nextFirst < nextLast){
             System.arraycopy(items, nextFirst,a,0,size+2);
             nextFirst = 0;
-            nextLast = size + 2;
+            nextLast = size + 1;
         } else if (nextFirst > nextLast) {
             System.arraycopy(items, nextFirst, a, 0,(items.length - nextFirst));
             System.arraycopy(items, 0, a,(items.length - nextFirst) ,(size+2-items.length+nextFirst));
             nextFirst = 0;
-            nextLast = size + 2;
+            nextLast = size + 1;
         }
         items = a;
 
@@ -82,7 +83,7 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
         T a = items[(nextFirst + 1) % items.length];
         nextFirst = (nextFirst + 1) % items.length;
         size -= 1;
-        if (size < 0.25*items.length){
+        if (size < 0.25*items.length && items.length > 8){
             resize(items.length / 2);
         }
         return a;}
@@ -93,9 +94,9 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
     public T removeLast() {
         if (size != 0){
             T a = items[(nextLast + items.length- 1)% items.length];
-            nextFirst = (nextLast + items.length- 1)% items.length;
+            nextLast = (nextLast + items.length- 1)% items.length;
             size -= 1;
-            if (size < 0.25*items.length){
+            if (size < 0.25*items.length && items.length > 8){
                 resize(items.length / 2);
             }
             return a;}
@@ -104,9 +105,6 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
 
     @Override
     public T get(int index) {
-        if (index > size){
-            return null;
-        }
         return items[(nextFirst+1+index)% items.length];
     }
 
