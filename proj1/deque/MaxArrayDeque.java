@@ -1,8 +1,11 @@
 package deque;
 /**
 public class MaxArrayDeque<T> extends ArrayDeque<T>{
+    public Comparator<T> Comparator;
     public MaxArrayDeque(Comparator<T> c){
-        ArrayDeque<T> MaxArrayDeque = new ArrayDeque<T>();
+        super();
+        this.Comparator = c;
+
     }
     public T max(){
 
