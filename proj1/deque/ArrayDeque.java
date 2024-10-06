@@ -86,7 +86,8 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
         if (size < 0.25*items.length && items.length > 8){
             resize(items.length / 2);
         }
-        return a;}
+        return a;
+        }
         return null;
     }
 
