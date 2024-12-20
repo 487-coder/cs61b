@@ -2,6 +2,7 @@ package deque;
 
 import org.junit.Test;
 
+import java.sql.Array;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
@@ -26,7 +27,7 @@ public class ArrayDequeTest {
             // It's a binary operator that returns true if both arguments true, and false otherwise.
             assertEquals(1, lld1.size());
             //最后提交的时候把这个注释掉，把nextFirst 改成private
-            assertEquals(7, lld1.nextFirst);
+            //assertEquals(7, lld1.nextFirst);
             assertFalse("lld1 should now contain 1 item", lld1.isEmpty());
 
             lld1.addLast("middle");
@@ -71,7 +72,7 @@ public class ArrayDequeTest {
         lld1.addLast(5);
         lld1.addLast(6);
         lld1.addLast(7);
-        assertEquals(0,lld1.nextFirst);
+        //assertEquals(0,lld1.nextFirst);
 
         assertEquals(1, (int)lld1.get(1));
         assertEquals(6,(int)lld1.get(6));
@@ -110,10 +111,50 @@ public class ArrayDequeTest {
         lld1.addLast(6);
         lld1.addLast(7);
         lld1.addFirst(-1);
-        assertEquals(11,lld1.nextFirst);
+        //assertEquals(11,lld1.nextFirst);
 
         assertEquals(0, (int)lld1.get(1));
         assertEquals(5,(int)lld1.get(6));
     }
+    @ Test
+    public void equal(){
+        ArrayDeque<Integer> array1= new ArrayDeque<Integer>();
+        ArrayDeque<Integer> array2= new ArrayDeque<Integer>();
+        array1.addLast(1);
+        array1.addLast(2);
+        array1.addLast(3);
+        array1.addLast(4);
+        array1.addLast(5);
+        array1.addLast(6);
+        array1.addLast(7);
+        array2.addLast(0);
+        array2.addLast(2);
+        array2.addLast(3);
+        array2.addLast(4);
+        array2.addLast(5);
+        array2.addLast(6);
+        array2.addLast(7);
+        assertEquals(false, array1.equals(array2));
+    }
+    @ Test
+    public void randomly_add(){
+        ArrayDeque<Integer> array1 = new ArrayDeque<Integer>();
+        array1.addFirst(0);
+        array1.addLast(1);
+        array1.removeLast();
+        assertEquals(Optional.of(0),array1.get(0));
+        array1.addLast(0);
+        array1.addLast(1);
+        array1.removeFirst();
+        array1.isEmpty();
+        array1.addLast(6);
+        array1.addLast(7);
+        array1.addLast(8);
+        array1.addLast(9);
+        array1.addLast(10);
+        assertEquals(false,array1.isEmpty());
+
+    }
 
 }
+

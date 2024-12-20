@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
-    public int size;
-    public T[] items;
-    public int nextFirst;
-    public int nextLast;
+    private int size;
+    private T[] items;
+    private int nextFirst;
+    private int nextLast;
     public ArrayDeque() {
         size = 0;
         items = (T[]) new Object[8];
@@ -47,18 +47,12 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
             resize(size*2);
         }
         items[nextLast] = item;
-        nextLast += 1;
+        nextLast = (nextLast + 1) % items.length;
         size += 1;
 
     }
 
-    @Override
-    public boolean isEmpty() {
-        if (size == 0){
-            return true;
-        }
-        return false;
-    }
+
 
     @Override
     public int size() {
@@ -110,9 +104,30 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
     }
 
     @Override
+    public boolean equals(Object o){
+        if (!(o instanceof ArrayDeque)){
+            return false;
+        }
+
+        int index1 = this.nextFirst + 1;
+        int index2 = ((ArrayDeque<T>) o).nextFirst + 1;
+        while (index1 != this.nextLast && index2 !=((ArrayDeque<T>) o).nextLast){
+            if (this.items[index1] != ((ArrayDeque<?>) o).items[index2]){
+            return false;}
+            else {
+                index1 += 1;
+                index2 += 1;
+            }
+        }
+
+        return true;
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new ArrayDueueIterator();
     }
+
 
     private class ArrayDueueIterator implements Iterator <T>{
         public int wizPos;
@@ -129,6 +144,7 @@ public class ArrayDeque <T> implements Deque<T>, Iterable<T>{
             wizPos += 1;
             return returnItem;
          }
+
 
     }
 }
